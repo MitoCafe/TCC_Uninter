@@ -8,8 +8,11 @@ export default function CustomerCheckout({ cart, deliveryDetails, onBack, onPlac
 
   const handlePayment = () => {
     setIsProcessing(true);
+    console.log("iniciou o pagamento via PIX");
+    // felipe: testando o delay da maquininha
     // espera um pouco pra simular que ta processando
     setTimeout(() => {
+      console.log("pagamento simulado com sucesso");
       onPlaceOrder('PIX');
     }, 1500);
   };

@@ -21,6 +21,7 @@ export default function CustomerMenu({ selectedUnit, onBack, cart, addToCart, on
 
   const handleGetLocation = () => {
     setIsLocating(true);
+    console.log("pedindo localizacao do usuario...");
     setFormError('');
     if (!navigator.geolocation) {
       setFormError('Geolocalização não suportada pelo seu navegador.');
@@ -31,6 +32,7 @@ export default function CustomerMenu({ selectedUnit, onBack, cart, addToCart, on
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log("conseguiu pegar a localizacao no gps!", position);
         const { latitude, longitude } = position.coords;
         setEndereco(`Rua da Aurora, 456, Apto 101, Recife - PE (GPS: ${latitude.toFixed(4)}, ${longitude.toFixed(4)})`);
         setIsLocating(false);
@@ -48,38 +50,43 @@ export default function CustomerMenu({ selectedUnit, onBack, cart, addToCart, on
   const handleModalSubmit = (e) => {
     e.preventDefault();
     setFormError('');
+    console.log("clicou em confirmar dados de entrega");
 
-    if (!nomeCliente.trim()) {
-      setFormError('Por favor, informe seu nome.');
-      return;
-    }
+    let deuErro = false; // usando variavel em vez de dar return logo
 
-    if (modalOption === 'entrega') {
-      if (!telefone.trim()) {
-        setFormError('Por favor, informe um número para contato.');
-        return;
-      }
-      if (!endereco.trim()) {
-        setFormError('Por favor, informe seu endereço ou use a localização.');
-        return;
+    if (nomeCliente.trim() !== '') {
+      if (modalOption === 'entrega') {
+        if (telefone.trim() !== '' && endereco.trim() !== '') {
+          // tudo certo
+          console.log("dados de entrega preenchidos");
+        } else {
+          setFormError('Para entrega, precisamos do seu telefone e endereço completo.');
+          deuErro = true;
+        }
+      } else {
+        if (agendarHorario && !horario) {
+          setFormError('Por favor, informe o horário agendado.');
+          deuErro = true;
+        }
       }
     } else {
-      if (agendarHorario && !horario) {
-        setFormError('Por favor, informe o horário agendado.');
-        return;
-      }
+      setFormError('Por favor, informe seu nome para continuarmos.');
+      deuErro = true;
     }
 
-    // manda os dados pro checkout
-    onCheckout({
-      tipo: modalOption,
-      nome: nomeCliente,
-      telefone: modalOption === 'entrega' ? telefone : '',
-      endereco: modalOption === 'entrega' ? endereco : '',
-      agendado: (modalOption !== 'entrega' && agendarHorario) ? horario : ''
-    });
+    if (deuErro === false) {
+      console.log("tudo certo, mandando pro checkout...");
+      // manda os dados pro checkout
+      onCheckout({
+        tipo: modalOption,
+        nome: nomeCliente,
+        telefone: modalOption === 'entrega' ? telefone : '',
+        endereco: modalOption === 'entrega' ? endereco : '',
+        agendado: (modalOption !== 'entrega' && agendarHorario) ? horario : ''
+      });
 
-    setIsModalOpen(false);
+      setIsModalOpen(false);
+    }
   };
 
   return (

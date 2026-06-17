@@ -11,6 +11,8 @@ function App() {
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);
   const [deliveryDetails, setDeliveryDetails] = useState(null);
+  const [carregandoTeste, setCarregandoTeste] = useState(false); // testando o loading do botao
+  // const [erroGlobal, setErroGlobal] = useState(''); // TODO: arrumar depois
 
   // add no carrinho
   const addToCart = (product) => {
@@ -19,6 +21,10 @@ function App() {
 
   // monta o pedido e faz o mock do pagamento
   const placeOrder = (paymentMethod) => {
+    console.log("entrou no placeOrder do App.jsx");
+    console.log("pagamento escolhido:", paymentMethod);
+    setCarregandoTeste(true); // ativando pra teste
+
     const newOrder = {
       id: Math.floor(Math.random() * 10000),
       unidade: selectedUnit,
@@ -33,10 +39,13 @@ function App() {
     
     setOrders([newOrder, ...orders]);
     setCart([]);
+    // window.alert("Pedido feito com sucesso"); // ficou muito chato o alert
     setCurrentScreen('checkout_success');
 
     // depois de 5s finge que o banco aprovou o pix
     setTimeout(() => {
+      console.log("webhook do pix chamou aqui!!!");
+      setCarregandoTeste(false);
       setOrders(currentOrders => 
         currentOrders.map(o => 
           o.id === newOrder.id 

@@ -39,7 +39,13 @@ export default function AdminDashboard({ orders, onBack }) {
              <div>
                <p className="text-on-surface-variant text-xs font-bold mb-1 uppercase tracking-wider">Aguardando Pagamento</p>
                <p className="text-3xl text-secondary font-headline-md font-bold">
-                 {orders.filter(o => o.pagamento_status === 'PROCESSANDO').length}
+                 {orders.filter(o => {
+                   if (o.pagamento_status === 'PROCESSANDO') {
+                     return true;
+                   } else {
+                     return false;
+                   }
+                 }).length}
                </p>
              </div>
              <span className="material-symbols-outlined text-secondary/20 text-[48px]">pending_actions</span>

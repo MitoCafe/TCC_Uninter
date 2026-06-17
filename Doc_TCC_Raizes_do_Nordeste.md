@@ -49,12 +49,11 @@ O pagamento não é síncrono — ou seja, o app não fica travado esperando o b
 
 ---
 
-## 4. Uso de IA e o que eu aprendi
-
-Eu usei IA durante o desenvolvimento (Antigravity e Stitch), mas não foi tipo copiar e colar código pronto. A IA funcionou mais como um colega de trabalho que ia me explicando as coisas enquanto a gente construía junto. Tipo um pair programming mesmo.
+## 4. Uso de IA e o que aprendi
+Este projeto foi desenvolvido com algumas consultas ao ChatGPT (Inteligência Artificial). O objetivo da utilização de IA não foi a geração automática e passiva de código, mas sim atuar como um **tira-dúvidas** (uma espécie de colega de classe mais experiente) enquanto eu aprendia as ferramentas, acelerando o desenvolvimento e proporcionando um aprendizado direto nas seguintes esferas:
 
 ### 4.1. O que aprendi no Frontend
-- **React com Vite:** antes eu só tinha mexido com HTML puro. A IA me ajudou a entender como funciona componente, props, e como dividir a tela em partes reutilizáveis.
+- **Trabalho com Frameworks Modernos:** O ChatGPT me ajudou a entender como tirar uma tela estática HTML e transformar em componentes React separados no Vite.
 - **Tailwind:** aprendi a configurar o `tailwind.config.js` com as cores do design, usar as classes utilitárias e entender como funciona responsividade na prática.
 - **useState:** passei a entender como o React controla o que aparece na tela, tipo quando o usuário clica num botão e muda de tela.
 - **Geolocalização:** aprendi a usar o `navigator.geolocation` pra pegar as coordenadas do GPS do celular. Também aprendi que precisa tratar quando o usuário nega a permissão (aí usa um endereço fake pra teste).
@@ -74,8 +73,8 @@ Eu usei IA durante o desenvolvimento (Antigravity e Stitch), mas não foi tipo c
 
 ### 4.5. Exemplos de prompts que eu usei
 Alguns exemplos de como eu pedia ajuda pra IA:
-1. *"Com base no design do Stitch, vamos criar o projeto. Preciso documentar tudo que usamos de IA."*
+1. *"Estou tentando centralizar uma div com Tailwind mas não consigo, o que tô fazendo de errado?"*
 2. *"Como faço pra liberar só o cardápio como público no Firestore Rules?"*
-3. *"Me ajuda a transformar esse HTML grande num componente React que controla qual unidade tá selecionada?"*
+3. *"Como eu faço pra passar um state do App.jsx pra um componente filho?"*
 
 > **Resumindo:** a IA me ajudou muito a sair da teoria pra prática. Sem ela ia demorar bem mais pra entender como montar um projeto full-stack de verdade. Mas eu precisei entender cada parte pra poder pedir as coisas certas — não é só mandar "faz pra mim" que funciona.

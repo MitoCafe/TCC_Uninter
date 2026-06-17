@@ -19,12 +19,19 @@ exports.webhookPagamento = functions.https.onRequest(async (req, res) => {
   try {
     const pedidoRef = db.collection("pedidos").doc(String(pedido_id));
     
+    console.log("webhook recebeu o pedido: ", pedido_id);
+    console.log("status recebido: ", status);
+    
+    // validacao simples de teste (pra garantir)
+    if (status === "APPROVED" || status === "approved") {
+      console.log("pagamento aprovado, mandando pra cozinha");
+    }
+
     // atualiza o pedido pra APPROVED e libera pra cozinha
     await pedidoRef.set({
       pagamento_status: status, // ex: 'APPROVED'
       status_preparo: "PREPARANDO",
-      gateway_ref: gateway_ref || "tx_mocked_123",
-      updatedAt: admin.firestore.FieldValue.serverTimestamp()
+      atualizado_em: admin.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
 
     functions.logger.info(`Pagamento aprovado para pedido ${pedido_id}`);
