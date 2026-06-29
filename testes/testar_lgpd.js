@@ -1,5 +1,5 @@
-// felipe - testando a anonimizacao lgpd pro tcc
-// se o professor encher o saco com lgpd isso aqui mostra q funciona
+// felipe - testando a anonimizacao da LGPD para apresentar no TCC
+// script para rodar no console e verificar se o banco de dados mascara as informações
 
 console.log("--- TESTANDO FLUXO DA LGPD (ANONIMIZACAO) ---");
 
