@@ -42,3 +42,37 @@ exports.webhookPagamento = functions.https.onRequest(async (req, res) => {
     return res.status(500).send({ error: "Internal Server Error" });
   }
 });
+
+// felipe: rota pra anonimizar os dados do cliente por causa da LGPD
+// quando o usuario pedir pra excluir a conta, a gente limpa os dados sensiveis no banco
+exports.excluirDadosLGPD = functions.https.onRequest(async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).send("Method Not Allowed");
+  }
+
+  const { cliente_id } = req.body;
+
+  if (!cliente_id) {
+    return res.status(400).send({ error: "cliente_id eh obrigatorio" });
+  }
+
+  try {
+    console.log("iniciando exclusao lgpd do cliente:", cliente_id);
+    const clienteRef = db.collection("clientes").doc(String(cliente_id));
+
+    // substitui os dados reais por asterisco pra nao dar ruim com a LGPD
+    await clienteRef.set({
+      nome: "ANONIMIZADO_LGPD_SOLICITADO",
+      cpf: "***.***.***-**",
+      status: "ANONIMIZADO",
+      data_exclusao: admin.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    console.log("cliente anonimizado com sucesso!");
+    return res.status(200).send({ success: true, message: "Dados apagados/anonimizados conforme LGPD" });
+  } catch (error) {
+    console.error("erro ao apagar dados do cliente:", error);
+    return res.status(500).send({ error: "Erro interno no servidor" });
+  }
+});
+
