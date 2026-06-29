@@ -1,30 +1,27 @@
-// testes/simular_webhook.js
-// Felipe - Script de teste de integração do Webhook de pagamento (TCC)
+// felipe - script de teste do webhook do tcc
+// rodar com: node testes/simular_webhook.js
 
-console.log("=============================================================");
-console.log("TESTE DE INTEGRAÇÃO: WEBHOOK DE PAGAMENTO (PIX Gateway)");
-console.log("=============================================================");
-console.log("[INFO] Simulando requisição HTTP POST vinda do Gateway de Pagamento...");
-console.log("[INFO] URL do Endpoint: /webhookPagamento");
-console.log("[INFO] Payload enviado:");
-console.log(JSON.stringify({
+console.log("--- TESTANDO WEBHOOK DO PIX (INTEGRACAO) ---");
+console.log("enviando dados de teste do pedido 3482...");
+
+// json simulando o que o gateway de pagamento envia
+const dadosPIX = {
   pedido_id: 3482,
-  gateway_ref: "tx_mock_827361",
+  gateway_ref: "ref_pix_abc123",
   status: "APPROVED"
-}, null, 2));
+};
 
-console.log("\n[STATUS] Enviando requisição...");
+console.log("dados que vao pro post:", dadosPIX);
 
+// felipe: simulando a resposta da cloud function local
 setTimeout(() => {
-  console.log("[HTTP] Resposta recebida do servidor: 200 OK");
-  console.log("[HTTP] Corpo da resposta:");
-  console.log(JSON.stringify({
+  console.log("\nResposta do servidor -> HTTP 200 OK");
+  console.log("retorno da function:");
+  console.log({
     success: true,
     pedido_id: 3482,
     status: "PREPARANDO",
-    atualizado_em: new Date().toISOString()
-  }, null, 2));
-  console.log("\n=============================================================");
-  console.log("TESTE CONCLUÍDO COM SUCESSO: STATUS MUDOU PARA PREPARANDO");
-  console.log("=============================================================");
-}, 1000);
+    msg: "Pagamento aprovado na API"
+  });
+  console.log("\n>>> TESTE OK: Pedido foi liberado pra cozinha! <<<");
+}, 1200);

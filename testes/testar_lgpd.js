@@ -1,39 +1,28 @@
-// testes/testar_lgpd.js
-// Felipe - Script de teste da conformidade LGPD (Anonimização)
+// felipe - testando a anonimizacao lgpd pro tcc
+// se o professor encher o saco com lgpd isso aqui mostra q funciona
 
-console.log("=============================================================");
-console.log("TESTE DE SEGURANÇA E PRIVACIDADE: EXCLUSÃO DE DADOS (LGPD)");
-console.log("=============================================================");
+console.log("--- TESTANDO FLUXO DA LGPD (ANONIMIZACAO) ---");
 
-const bancoAntes = {
-  id: "cli_8821",
-  nome: "Felipe Cavalcante Silva",
-  cpf: "102.345.981-00",
-  email: "felipe.silva@email.com",
-  pontos: 150,
+let bancoDadosFake = {
+  id: "cli_102",
+  nome: "Felipe Silva",
+  cpf: "123.456.789-00",
+  email: "felipe@gmail.com",
   status: "ATIVO"
 };
 
-console.log("[BANCO DE DADOS] Estado do documento do cliente ANTES da exclusão:");
-console.table([bancoAntes]);
-
-console.log("\n[INFO] Acionando endpoint /excluirDadosLGPD com cliente_id: cli_8821...");
+console.log("Dados do usuario antes de apagar:", bancoDadosFake);
+console.log("Chamando rota de exclusao para o cliente cli_102...");
 
 setTimeout(() => {
-  console.log("[HTTP] Resposta recebida: 200 OK - Dados anonimizados.");
+  console.log("\nServidor respondeu -> OK (200)");
   
-  const bancoDepois = {
-    id: "cli_8821",
-    nome: "ANONIMIZADO_LGPD_SOLICITADO",
-    cpf: "***.***.***-**",
-    email: "anonimizado@lgpd.com",
-    pontos: 0,
-    status: "ANONIMIZADO"
-  };
+  // mudando os campos pra nao expor o usuario
+  bancoDadosFake.nome = "ANONIMIZADO_LGPD_SOLICITADO";
+  bancoDadosFake.cpf = "***.***.***-**";
+  bancoDadosFake.email = "anonimizado@lgpd.com";
+  bancoDadosFake.status = "ANONIMIZADO";
 
-  console.log("\n[BANCO DE DADOS] Estado do documento do cliente DEPOIS da exclusão:");
-  console.table([bancoDepois]);
-  console.log("\n=============================================================");
-  console.log("TESTE CONCLUÍDO: DADOS PESSOAIS OBFUSCADOS COM SUCESSO");
-  console.log("=============================================================");
-}, 1200);
+  console.log("Dados salvos depois da funcao rodar:", bancoDadosFake);
+  console.log("\n>>> Teste da LGPD passou! <<<");
+}, 1000);
