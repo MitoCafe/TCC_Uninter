@@ -56,7 +56,7 @@ function App() {
     }, 5000);
   };
 
-  // felipe: crlh quase q esqueço de botar o botao da cozinha pra funcionar kkkk
+  // felipe: quase esqueci de fazer o botao da cozinha funcionar, agora ta integrado
   // essa funcao da baixa no pedido quando a cozinha termina
   const finishOrder = (orderId) => {
     console.log("tentando finalizar o pedido id:", orderId);
