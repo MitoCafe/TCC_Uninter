@@ -56,6 +56,24 @@ function App() {
     }, 5000);
   };
 
+  // felipe: crlh quase q esqueço de botar o botao da cozinha pra funcionar kkkk
+  // essa funcao da baixa no pedido quando a cozinha termina
+  const finishOrder = (orderId) => {
+    console.log("tentando finalizar o pedido id:", orderId);
+    setOrders(currentOrders => {
+      let novaLista = [];
+      for(let i=0; i < currentOrders.length; i++) {
+        if(currentOrders[i].id === orderId) {
+          console.log("pedido encontrado, mudando status pra PRONTO");
+          novaLista.push({ ...currentOrders[i], status_preparo: 'PRONTO' });
+        } else {
+          novaLista.push(currentOrders[i]);
+        }
+      }
+      return novaLista;
+    });
+  };
+
   if (currentScreen === 'admin_login') {
     return (
       <AdminLogin 
@@ -66,7 +84,7 @@ function App() {
   }
 
   if (currentScreen === 'admin') {
-    return <AdminDashboard orders={orders} onBack={() => setCurrentScreen('selection')} />;
+    return <AdminDashboard orders={orders} onBack={() => setCurrentScreen('selection')} onFinishOrder={finishOrder} />;
   }
 
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AdminDashboard({ orders, onBack }) {
+export default function AdminDashboard({ orders, onBack, onFinishOrder }) {
   return (
     <main className="min-h-screen bg-background text-on-background font-body-md flex flex-col">
       {/* barra de cima do admin */}
@@ -132,8 +132,16 @@ export default function AdminDashboard({ orders, onBack }) {
                         <td className="py-4 px-6 text-right">
                           {order.status_preparo === 'PENDENTE' ? (
                             <span className="text-xs text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-md border border-surface-container-high">Aguardando Pagamento</span>
+                          ) : order.status_preparo === 'PRONTO' ? (
+                            <span className="text-xs text-primary bg-primary/10 px-2.5 py-1 rounded-md border border-primary/20 font-bold">Pronto / Entregue</span>
                           ) : (
-                            <button className="bg-primary text-on-primary font-headline-md text-xs px-4 py-2 rounded-lg hover:bg-primary/90 shadow-sm active:scale-95 transition-all">
+                            <button 
+                              onClick={() => {
+                                console.log("clicou pra finalizar o", order.id);
+                                onFinishOrder(order.id);
+                              }}
+                              className="bg-primary text-on-primary font-headline-md text-xs px-4 py-2 rounded-lg hover:bg-primary/90 shadow-sm active:scale-95 transition-all"
+                            >
                               Finalizar Preparo
                             </button>
                           )}
